@@ -1,6 +1,10 @@
-var koa = require('koa');
-var auth = require('koa-basic-auth');
-var app = module.exports = koa();
+var koa = require('koa'),
+    auth = require('koa-basic-auth'),
+    app = module.exports = koa(),
+    fs = require('fs'),
+    gm = require('gm').subClass({imageMagick: true}),
+    fnv = require('fnv-plus'),
+    ga = require('./lib/generateAvatar');;
 
 // custom 401 handling
 
@@ -26,11 +30,9 @@ app.use(function* (next){
 
 app.use(function* (){
   var path = this.request.url.split("/");
-  var uid = path[1];
-  var size = path[2].split("_");
-  var width = parseInt(size[0]);
-  var height = parseInt(size[1]);
-  this.body = height;
+  var filename = yield ga(path[1],path[2]);
+  console.log(filename);
+  this.body = filename;
 });
 
 if (!module.parent) app.listen(8080);

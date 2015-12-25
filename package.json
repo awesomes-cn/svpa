@@ -5,6 +5,9 @@
   "main": "app.js",
   "dependencies": {
     "co-body": "^4.0.0",
+    "co-fs": "^1.2.0",
+    "fnv-plus": "^1.2.12",
+    "gm": "^1.21.1",
     "koa": "^1.1.2",
     "koa-basic-auth": "^1.1.2"
   },
