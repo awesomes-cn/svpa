@@ -1,10 +1,9 @@
 var koa = require('koa'),
     auth = require('koa-basic-auth'),
+    co = require('co'),
+    fs = require('co-fs'),
     app = module.exports = koa(),
-    fs = require('fs'),
-    gm = require('gm').subClass({imageMagick: true}),
-    fnv = require('fnv-plus'),
-    ga = require('./lib/generateAvatar');;
+    ga = require('./lib/generateAvatar');
 
 // custom 401 handling
 
@@ -31,8 +30,8 @@ app.use(function* (next){
 app.use(function* (){
   var path = this.request.url.split("/");
   var filename = yield ga(path[1],path[2]);
-  console.log(filename);
-  this.body = filename;
+  this.type = 'image/png';
+  this.body = yield fs.readFile(filename);
 });
 
 if (!module.parent) app.listen(8080);
