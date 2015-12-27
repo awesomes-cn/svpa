@@ -3,6 +3,7 @@ var koa = require('koa'),
     fs = require('co-fs'),
     app = module.exports = koa(),
     url = require('url'),
+    router = require('koa-route'),
     ga = require('./lib/generateAvatar');
 
 // custom 401 handling
@@ -23,13 +24,18 @@ app.use(function* (next){
 
 // secret response
 
-app.use(function* (){
+
+
+
+
+var avatar =  function *(name){
   var parseUrl = url.parse(decodeURI(this.request.url),true);
-  
-  var name = parseUrl.pathname.split("/")[1];
   var filename = yield ga(name,parseUrl.query.size);
   this.type = 'image/png';
   this.body = yield fs.readFile(filename);
-});
+}
+
+app.use(router.get('/avatar', avatar));
+app.use(router.get('/avatar/:name', avatar));
 
 if (!module.parent) app.listen(8080);
