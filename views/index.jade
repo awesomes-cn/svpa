@@ -1,0 +1,31 @@
+extends layouts/layout.jade
+
+block con
+  style.
+    body{margin:0; padding: 0;}
+    .banner{background-color: #08A6F2;  color:#FFF;   padding: 50px 0;text-align: center;}
+    .banner h1{margin: 0;  font-size: 150px;}
+    .container{width: 99%; max-width: 1000px; margin: 0 auto}
+    img.item{margin: 20px;}
+    #name-txt{border: none;  padding: 15px;  width: 200px;  margin: 50px 0;  outline: none;  border-radius: 100px;  font-size: 20px; text-align:center;}
+    a{text-decoration: none}
+    a#url{  display: inline-block;  background-color: #EEE;  padding: 10px 20px;  opacity: 0.5;  border-radius: 100px;}
+
+  div.banner
+    h1 Svpa
+    p The simplest easyest and powerfull avatar service
+    input#name-txt(type="text" placeholder="Nickname")
+    p: img#preview(src="http://192.168.141.128:8080/avatar?size=200")
+    p: a#url(href="http://svpa.awesomes.cn/avatar?size=200" target="_blank")  http://svpa.awesomes.cn/avatar?size=200
+  div.container
+    - for item in ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',0,1,2,3,4,5,6,7,8,9]
+      img.item(src="http://svpa.awesomes.cn/avatar/#{item}?size=100")
+
+  script(type='text/javascript').
+    $(function(){
+      $("#name-txt").keyup(function(){
+        var url = "http://svpa.awesomes.cn/avatar/"+$(this).val()+"?size=200";
+        $("#url").html(url).attr("href",url);
+        $("#preview").attr("src",url)
+      })
+    })      
