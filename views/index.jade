@@ -18,11 +18,13 @@ block con
     .featitle{color: #0D7384; text-align:center; font-size: 40px}
     .demos{padding: 50px 0;}
     .footer{text-align:center; padding: 50px; background-color: #00B078;color: #055B41}
+    .usage{background-color: #F2BB62; padding: 50px 0; overflow: hidden; color:#025360; text-align:center;color: #A86E10}
+    .usage .featitle{color: #A86E10}
 
 
   div.banner
     img.logo(src="http://svpa.oss-cn-shanghai.aliyuncs.com/logo.png")
-    p The simplest easyest and powerfull avatar service
+    p A simple fast stable and powerfull avatar service
     input#name-txt(type="text" placeholder="Nickname")
     p: img#preview(src="http://svpa.awesomes.cn/avatar?size=200")
     p: a#url(href="http://svpa.awesomes.cn/avatar?size=200" target="_blank")  http://svpa.awesomes.cn/avatar?size=200
@@ -48,6 +50,27 @@ block con
         div.inner
           h1 Open source
           p We open the service on Github,under MIT license.
+  
+  div.usage
+    div.container
+      h1.featitle Usage
+      h3 request 
+      p 
+        span http://svpa.awesomes.cn/avatar/[
+        strong nickname
+        span]?size=[
+        stron 100
+        span ]
+      h3 method
+      p Get & Post
+      h3 nickname
+      p required. Support both English and Chinese
+      h3 size
+      p
+        span optional. The value can be one of [
+        strong 50,100,200
+        span ]. Default is 
+        strong 50
 
   div.container.demos
     h1.featitle(style="color: #469DAC") Some Avatars...
