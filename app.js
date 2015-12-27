@@ -1,8 +1,8 @@
 var koa = require('koa'),
-    auth = require('koa-basic-auth'),
     co = require('co'),
     fs = require('co-fs'),
     app = module.exports = koa(),
+    url = require('url'),
     ga = require('./lib/generateAvatar');
 
 // custom 401 handling
@@ -21,15 +21,13 @@ app.use(function* (next){
   }
 });
 
-// require auth
-
-//app.use(auth({ name: 'tj', pass: 'tobi' }));
-
 // secret response
 
 app.use(function* (){
-  var path = this.request.url.split("/");
-  var filename = yield ga(path[1],path[2]);
+  var parseUrl = url.parse(decodeURI(this.request.url),true);
+  
+  var name = parseUrl.pathname.split("/")[1];
+  var filename = yield ga(name,parseUrl.query.size);
   this.type = 'image/png';
   this.body = yield fs.readFile(filename);
 });

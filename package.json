@@ -11,8 +11,9 @@
     "fnv-plus": "^1.2.12",
     "gm": "^1.21.1",
     "koa": "^1.1.2",
-    "koa-basic-auth": "^1.1.2",
-    "q": "^1.4.1"
+    "pinyin": "^2.6.2",
+    "q": "^1.4.1",
+    "url": "^0.11.0"
   },
   "devDependencies": {},
   "scripts": {
