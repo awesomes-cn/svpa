@@ -2,24 +2,67 @@ extends layouts/layout.jade
 
 block con
   style.
-    body{margin:0; padding: 0;}
-    .banner{background-color: #08A6F2;  color:#FFF;   padding: 50px 0;text-align: center;}
+    body{margin:0; padding: 0; font-family: 'Hiragino Sans GB', Helvetica, Arial, 'STHeiti', 'WenQuanYi Micro Hei', sans-serif; background-color: #F0FEFF; line-height: 25px;}
+    .banner{background-color: #E0CEB3;  color:#8C7A5E;   padding: 50px 0;text-align: center;}
     .banner h1{margin: 0;  font-size: 150px;}
     .container{width: 99%; max-width: 1000px; margin: 0 auto}
-    img.item{margin: 20px;}
+    img.item{margin: 20px;  box-shadow: 1px 1px 5px #BEBEBE;}
     #name-txt{border: none;  padding: 15px;  width: 200px;  margin: 50px 0;  outline: none;  border-radius: 100px;  font-size: 20px; text-align:center;}
     a{text-decoration: none}
-    a#url{  display: inline-block;  background-color: #EEE;  padding: 10px 20px;  opacity: 0.5;  border-radius: 100px;}
+    a#url{  display: inline-block;  background-color: #EEE;  padding: 10px 20px;  opacity: 0.5;  border-radius: 100px; color: #150E03}
+    .logo{width: 400px; margin: 50px 0}
+    .feature{background-color: #00C1E0; padding: 50px 0; overflow: hidden; color:#025360}
+    .feature .inner{ }
+    .feature .item {width:50%; float: left;  }
+    .feature .inner{margin: 50px; background-color: #FFF;opacity: 0.5; padding: 50px; text-align:center;height: 150px;}
+    .featitle{color: #0D7384; text-align:center; font-size: 40px}
+    .demos{padding: 50px 0;}
+    .footer{text-align:center; padding: 50px; background-color: #00B078;color: #055B41}
+
 
   div.banner
-    h1 Svpa
+    img.logo(src="http://svpa.oss-cn-shanghai.aliyuncs.com/logo.png")
     p The simplest easyest and powerfull avatar service
     input#name-txt(type="text" placeholder="Nickname")
     p: img#preview(src="http://svpa.awesomes.cn/avatar?size=200")
     p: a#url(href="http://svpa.awesomes.cn/avatar?size=200" target="_blank")  http://svpa.awesomes.cn/avatar?size=200
-  div.container
+  div.feature
+    div.container
+      h1.featitle Features
+      div.item 
+        div.inner
+          h1 Simple
+          p Just use http://svpa.awesomes.cn/[Nickname] you can achieve the avatar everywhere.
+
+      div.item 
+        div.inner
+          h1 Fast
+          p We use Node koajs lightweight framework,you can trust our speed.
+
+      div.item 
+        div.inner
+          h1 Stable
+          p We deploy the service on Aliyun ECS,We can offer the stable and continued service. 
+
+      div.item 
+        div.inner
+          h1 Open source
+          p We open the service on Github,under MIT license.
+
+  div.container.demos
+    h1.featitle(style="color: #469DAC") Some Avatars...
     - for item in ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',0,1,2,3,4,5,6,7,8,9]
       img.item(src="http://svpa.awesomes.cn/avatar/#{item}?size=100")
+  
+  div.footer
+    p
+      span We open the source on 
+      a(href="https://github.com/awesomes-cn/svpa" target="_blank") Github
+    p
+      span If you have any problem or suggest,we always wait and welcome you on 
+      a(href="https://gitter.im/awesomes-cn/svpa" target="_blank") Gitter
+      span(style="padding: 0 5px;") or 
+      a(href="http://weibo.com/awesomescn" target="_blank") Weibo
 
   script(type='text/javascript').
     $(function(){
