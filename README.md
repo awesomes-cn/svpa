@@ -12,22 +12,22 @@ Simple and  powerfull  avatar service.
 
 ## Development
 
-1. Clone the repo:
+1  Clone the repo:
 
 ```bash
 git clone git@github.com:awesomes-cn/svpa.git
 ```
 
-2. Install packages:
+2 Install packages:
 ```bash
 npm install
 ```
-3. Run:
+3 Run:
 ```bash
 node --harmony app.js
 ```
 
-4. Go developing....
+4 Go developing....
 
 ## Thanks
 * [Koajs](https://github.com/koajs/koa)
