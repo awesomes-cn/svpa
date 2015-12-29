@@ -9,6 +9,11 @@ var koa = require('koa'),
 
 // custom 401 handling
 
+require('fs').readFile('now.txt',function(err,data){
+  global.reatime = {amount: parseInt(data.toString())};
+});
+
+
 app.use(function* (next){
   try {
     yield* next;
@@ -25,6 +30,16 @@ app.use(function* (next){
 
 // secret response
 
+
+var server = require('http').createServer(app.callback());
+var io = require('socket.io')(server);
+io.on('connection', function(socket){ 
+  io.emit('notify', { item: global.reatime});
+  socket.on('disconnect', function(){});
+});
+
+
+
 var render= views(__dirname + '/views', { map: { html: 'swig' }});
 
 
@@ -32,6 +47,8 @@ var render= views(__dirname + '/views', { map: { html: 'swig' }});
 function* avatar(name){ 
   var parseUrl = url.parse(decodeURI(this.request.url),true);
   var filename = yield ga(name.toString(),parseUrl.query.size);
+  global.reatime.amount += 1;
+  io.emit('notify', { item: global.reatime});
   this.type = 'image/png';
   this.body = yield fs.readFile(filename);
 }
@@ -45,4 +62,13 @@ app.use(router.get('/', index));
 app.use(router.get('/avatar', avatar));
 app.use(router.get('/avatar/:name', avatar));
 
-if (!module.parent) app.listen(8080);
+
+setInterval(function(){
+  fs.writeFile('now.txt',global.reatime.amount)
+},60000)
+
+
+
+server.listen(8080);
+
+//if (!module.parent) app.listen(8080);

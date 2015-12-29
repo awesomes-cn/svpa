@@ -20,11 +20,16 @@ block con
     .footer{text-align:center; padding: 50px; background-color: #00B078;color: #055B41}
     .usage{background-color: #F2BB62; padding: 50px 0; overflow: hidden; color:#025360; text-align:center;color: #A86E10}
     .usage .featitle{color: #A86E10}
+    #amount{font-size: 50px; margin: 0 10px; }
 
 
   div.banner
     img.logo(src="http://svpa.oss-cn-shanghai.aliyuncs.com/logo.png")
     p A simple fast stable and powerfull avatar service
+    p(style="padding: 50px;")
+      span Service
+      span#amount 0
+      span times  
     input#name-txt(type="text" placeholder="Nickname")
     p: img#preview(src="http://svpa.awesomes.cn/avatar?size=200")
     p: a#url(href="http://svpa.awesomes.cn/avatar?size=200" target="_blank")  http://svpa.awesomes.cn/avatar?size=200
@@ -58,7 +63,7 @@ block con
       p 
         span http://svpa.awesomes.cn/avatar/[
         strong nickname
-        span]?size=[
+        span ]?size=[
         stron 100
         span ]
       h3 method
@@ -86,7 +91,8 @@ block con
       a(href="https://gitter.im/awesomes-cn/svpa" target="_blank") Gitter
       span(style="padding: 0 5px;") or 
       a(href="http://weibo.com/awesomescn" target="_blank") Weibo
-
+  
+  script(src="http://awesome-cnd.oss-cn-beijing.aliyuncs.com/socket.io.js")
   script(type='text/javascript').
     $(function(){
       $("#name-txt").keyup(function(){
@@ -94,4 +100,11 @@ block con
         $("#url").html(url).attr("href",url);
         $("#preview").attr("src",url)
       })
+
+
+      var socket = io('http://svpa.awesomes.cn');
+      socket.on('notify', function(data){
+        $("#amount").html(data.item.amount)
+        console.log(data)
+      });
     })      
