@@ -5,7 +5,8 @@ var koa = require('koa'),
     url = require('url'),
     router = require('koa-route'),
     views = require('co-views'),
-    ga = require('./lib/generateAvatar');
+    ga = require('./lib/generateAvatar'),
+    ft = require('./lib/fontStyle');
 
 // custom 401 handling
 
@@ -46,7 +47,7 @@ var render= views(__dirname + '/views', { map: { html: 'swig' }});
 
 function* avatar(name){ 
   var parseUrl = url.parse(decodeURI(this.request.url),true);
-  var filename = yield ga(name.toString(),parseUrl.query.size);
+  var filename = yield ga(name.toString(),parseUrl.query.size,parseUrl.query.font);
   global.reatime.amount += 1;
   io.emit('notify', { item: global.reatime});
   this.type = 'image/png';
@@ -55,7 +56,7 @@ function* avatar(name){
 
 
 function* index(){
-  this.body = yield render('index.jade', { });
+  this.body = yield render('index.jade', {fonts: ft.fonts, nowcount: global.reatime.amount});
 }
 
 app.use(router.get('/', index));

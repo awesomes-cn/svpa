@@ -6,7 +6,7 @@ block con
     .banner{background-color: #E0CEB3;  color:#8C7A5E;   padding: 50px 0;text-align: center;}
     .banner h1{margin: 0;  font-size: 150px;}
     .container{width: 99%; max-width: 1000px; margin: 0 auto}
-    img.item{margin: 20px;  box-shadow: 1px 1px 5px #BEBEBE;}
+    img.item{margin: 20px;  box-shadow: 1px 1px 5px #BEBEBE; border-radius: 100%}
     #name-txt{border: none;  padding: 15px;  width: 200px;  margin: 50px 0;  outline: none;  border-radius: 100px;  font-size: 20px; text-align:center;}
     a{text-decoration: none}
     a#url{  display: inline-block;  background-color: #EEE;  padding: 10px 20px;  opacity: 0.5;  border-radius: 100px; color: #150E03}
@@ -21,6 +21,8 @@ block con
     .usage{background-color: #F2BB62; padding: 50px 0; overflow: hidden; color:#025360; text-align:center;color: #A86E10}
     .usage .featitle{color: #A86E10}
     #amount{font-size: 50px; margin: 0 10px; }
+    table.params{width: 100%;border-right: #F7AB31 3px solid;border-top: #F7AB31 3px solid;}
+    table.params td,table.params th{min-width: 100px;border-left: #F7AB31 3px solid; border-bottom: #F7AB31 3px solid; padding: 10px;}
 
 
   div.banner
@@ -32,7 +34,7 @@ block con
       span times  
     input#name-txt(type="text" placeholder="Nickname")
     p: img#preview(src="http://svpa.awesomes.cn/avatar?size=200")
-    p: a#url(href="http://svpa.awesomes.cn/avatar?size=200" target="_blank")  http://svpa.awesomes.cn/avatar?size=200
+    p: a#url(href="http://svpa.awesomes.cn/avatar?size=200" target="_blank")  http://svpa.awesomes.cn/avatar?size=200&font=default
   div.feature
     div.container
       h1.featitle Features
@@ -64,23 +66,41 @@ block con
         span http://svpa.awesomes.cn/avatar/[
         strong nickname
         span ]?size=[
-        stron 100
+        strong 100
+        span ]&font=[
+        strong default
         span ]
       h3 method
       p Get & Post
       h3 nickname
       p required. Support both English and Chinese
-      h3 size
-      p
-        span optional. The value can be one of [
-        strong 50,100,200
-        span ]. Default is 
-        strong 50
+      h3 params
+      table.params(cellspacing="0")
+        tr
+          th Name 
+          th Required
+          th Default
+          th Description
+        tr
+          td size
+          td optional
+          td 50
+          td The size of the avatar(both width and height is the same.The units is px) The value can be one of [50,100,200]
+
+        tr
+          td font
+          td optional
+          td default
+          td The font of the  letter text.(avalible fonts is below)
+
+
 
   div.container.demos
-    h1.featitle(style="color: #469DAC") Some Avatars...
-    - for item in ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',0,1,2,3,4,5,6,7,8,9]
-      img.item(src="http://192.168.254.128:8080/avatar/#{item}121212111?size=100")
+    h1.featitle(style="color: #469DAC")  #{fonts.length} Avatar Fonts...
+    -for font in fonts
+      h3.featitle #{font.name} 
+      - for item in ['a','b','c','d','e','f','g']
+        img.item(src="http://192.168.141.128:8080/avatar/#{item}"+font.name+"?size=100&font="+font.name)
   
   div.footer
     p
@@ -96,15 +116,28 @@ block con
   script(type='text/javascript').
     $(function(){
       $("#name-txt").keyup(function(){
-        var url = "http://svpa.awesomes.cn/avatar/"+$(this).val()+"?size=200";
+        var url = "http://svpa.awesomes.cn/avatar/"+$(this).val()+"?size=200&font=default";
         $("#url").html(url).attr("href",url);
         $("#preview").attr("src",url)
       })
 
+     
+      var now = 0;
+      var timer = setInterval(function(){
+        $("#amount").html(now);
+        now = now + 10;
+        if(now >= #{nowcount}){
+          clearInterval(timer);
+          $("#amount").html(#{nowcount});
+          set_socket();
+        }
+      },1)
+      
+    })     
 
+    function set_socket(){
       var socket = io('http://svpa.awesomes.cn');
       socket.on('notify', function(data){
-        $("#amount").html(data.item.amount)
-        console.log(data)
+        $("#amount").html(data.item.amount);
       });
-    })      
+    }  
