@@ -23,6 +23,9 @@ block con
     #amount{font-size: 50px; margin: 0 10px; }
     table.params{width: 100%;border-right: #F7AB31 3px solid;border-top: #F7AB31 3px solid;}
     table.params td,table.params th{min-width: 100px;border-left: #F7AB31 3px solid; border-bottom: #F7AB31 3px solid; padding: 10px;}
+    .customer{background-color: #E7F28B; padding: 50px; text-align:center ;color: #737D1E;}
+    .customer .featitle {color: #737D1E}
+    .customer .links a{margin: 50px; padding: 30px 50px; text-align:center; display: inline-block; color: #85902F;    border: #BABF59 5px dashed;     font-size: 20px;}
 
 
   div.banner
@@ -102,6 +105,15 @@ block con
       - for item in ['a','b','c','d','e','f','g']
         img.item(src="http://svpa.awesomes.cn/avatar/#{item}"+font.name+"?size=100&font="+font.name)
   
+  div.customer
+    div.container
+      h1.featitle Who are using?
+      div.links
+        a(href="https://www.awesomes.cn" target="_blank") Awesomes-cn
+      p
+        span If you are using svpa and  want to appear here, just tell us through our email: 
+        strong 1246996371@qq.com
+
   div.footer
     p
       span We open the source on 
@@ -124,14 +136,15 @@ block con
      
       var now = 0;
       var timer = setInterval(function(){
+        var step = #{parseInt(nowcount / 20)};
         $("#amount").html(now);
-        now = now + 10;
+        now = now + step;
         if(now >= #{nowcount}){
           clearInterval(timer);
           $("#amount").html(#{nowcount});
           set_socket();
         }
-      },1)
+      },100)
       
     })     
 
